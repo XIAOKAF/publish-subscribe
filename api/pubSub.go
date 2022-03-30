@@ -32,3 +32,17 @@ func deletePublisher(ctx *gin.Context) {
 	delete(pubSub, publisher)
 	tool.Success(ctx, 200, "您已成功删除频道"+publisher)
 }
+
+//订阅频道
+func subscribe(ctx *gin.Context) {
+	subscriber := ctx.PostForm("subscriber")
+	publisher := ctx.PostForm("publisher")
+	_, ok := pubSub[publisher]
+	if !ok {
+		tool.Failure(ctx, 200, "该频道不存在")
+		return
+	}
+	subs = append(subs, subscriber)
+	pubSub[publisher] = subs
+	tool.Success(ctx, 200, "您已成功订阅该频道")
+}
