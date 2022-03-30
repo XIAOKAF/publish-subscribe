@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"publish-subscribe/service"
 	"publish-subscribe/tool"
 )
 
@@ -45,4 +46,16 @@ func subscribe(ctx *gin.Context) {
 	subs = append(subs, subscriber)
 	pubSub[publisher] = subs
 	tool.Success(ctx, 200, "您已成功订阅该频道")
+}
+
+//发布消息
+func publish(ctx *gin.Context) {
+	publisher := ctx.PostForm("publisher")
+	info := ctx.PostForm("info")
+	_, ok := pubSub[publisher]
+	if !ok {
+		tool.Failure(ctx, 200, "该频道不存在")
+		return
+	}
+	service.Publish(publisher, info, pubSub)
 }

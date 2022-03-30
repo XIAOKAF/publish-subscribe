@@ -8,7 +8,7 @@ func InitEngine() {
 	{
 		publisherGroup.POST("/createPublisher", createPublisher) //创建频道
 		publisherGroup.POST("/deletePublisher", deletePublisher) //删除频道
-		//publisherGroup.POST("/publish", publish)                 //发布消息
+		publisherGroup.POST("/publish", publish)                 //发布消息
 	}
 	engine.POST("/subscribe", subscribe) //订阅频道
 	engine.Run(":8080")
